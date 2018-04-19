@@ -1,0 +1,34 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+  {% block content %}
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">{{ boxtitle }}</h4>
+
+      {% if form.subject.errors %}
+        <ol>
+          {% for error in form.subject.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+          {% endfor %}
+        </ol>
+      {% endif %}
+
+      <!-- /.box-header -->
+      <!-- form start -->
+      <form class="form" action="" method="post">
+        <div class="box-body">
+        {% csrf_token %}
+        {{ form|crispy }}
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+        <button type="submit" value="save" class="btn btn-light float-right">Enviar</button>
+        </div>
+        <!-- /.box-footer -->
+        </form>
+      </div>
+    </div>
+  {% endblock %}

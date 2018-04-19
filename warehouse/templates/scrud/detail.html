@@ -1,0 +1,92 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load getattribute %}
+{% load verbose_names %}
+{% load list_shotcuts %}
+
+  {% block content %}
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">{{ boxtitle }}</h3>
+      </div>
+      <!-- /.box-header -->
+      <!-- form start -->
+      <table class="table table-hover table-striped">
+        <tbody>
+          {% for f in fields %}
+          <tr>
+            <th>{% get_verbose_field_name view.model f %}</th>
+            <td class="{% get_verbose_field_name view.model f %}_value" >{{ object|getattribute:f }}</td>
+          </tr>
+          {% endfor %}
+          <tr>
+            <th>Opções</th>
+            <td>
+              {% detailoptionmaker object %}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    {% for box,data in extra_tables.items %}
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{{ box|title }}</h3>
+
+          <div class="actions">
+            {% if not data.vertical_table %}
+              {% if data.urlList %}
+                {% boxheader data.urlList %}
+              {% endif %}
+                <button class="btn btn-light btn--icon">{{ data.count }}</button>
+            {% else %}
+                <a href="" class="actions__item zmdi zmdi-eye"></a>
+            {% endif %}
+        </div>
+      {% if data.vertical_table %}
+    <!-- form start -->
+        <div class="box-body" style="">
+          {% if data.count > 0 %}
+          <table class="table table-hover table-striped">
+              <tbody>
+                {% for field in data.fields %}
+                <tr>
+                  <th>{% get_verbose_field_name data.model field %}</th>
+                  <td id="{% get_verbose_field_name data.model field %}_value">{{ data.list|getattribute:field }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+          </table>
+          {% else %}
+            Nenhuma informação cadastrada
+          {% endif %}
+        </div>
+    {% else %}
+      <div class="box-body" style="">
+        <table class="table table-hover table-striped">
+          <tbody>
+            <tr>
+              {% for field in data.fields %}
+              <th> {% get_verbose_field_name data.list.model field %} </th>
+              {% endfor %}
+              <th> Opções </th>
+            </tr>
+            {% for obj in data.list.all %}
+            <tr>
+              {% for field in data.fields %}
+              <td>{{ obj|getattribute:field }}</td>
+              {% endfor %}
+              <td>
+              {% sublistoptionmaker obj data.options %}
+              </td>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+
+    {% endblock %}

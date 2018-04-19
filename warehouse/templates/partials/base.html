@@ -1,0 +1,58 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% include 'partials/head.html' %}
+
+        {% block extracss %}{% endblock %}
+    </head>
+
+    <body data-sa-theme="3">
+      {% block base_content %}
+        <main class="main">
+            {% include 'partials/spiner.html' %}
+
+            {% include 'partials/header.html' %}
+
+            {% include 'partials/left_menu.html' %}
+
+            <section class="content">
+                {% include 'partials/messages.html' %}
+
+                {% if form %}
+                  <div class="content__inner">
+                {% endif %}
+
+                {% if header %}
+                  {% include 'partials/content_header.html' %}
+                {% endif %}
+
+                {% if cards %}
+                  {% include 'partials/content_cards.html' %}
+                {% endif %}
+
+                {% block content %}
+                    oi
+                {% endblock %}
+
+                {% if form %}
+                  </div>
+                {% endif %}
+
+                {% include 'partials/footer.html' %}
+            </section>
+        </main>
+        {% endblock %}
+
+        {% include 'partials/rack_ie.html' %}
+
+        {% include 'partials/scripts.html' %}
+
+        {% block extrajs %}
+          {% for file_ in extra_js%}
+            <script src="{% static file_ %}"></script>
+          {% endfor %}
+        {% endblock %}
+    </body>
+</html>

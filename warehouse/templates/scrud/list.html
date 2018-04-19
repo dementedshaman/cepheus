@@ -1,0 +1,62 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load getattribute %}
+{% load verbose_names %}
+{% load list_shotcuts %}
+{% load crispy_forms_tags %}
+
+  {% block content %}
+
+
+  {% if search %}
+  <div class="box box-warning {% if search_exp %} {% else %}box-colapsed collapsed-box {% endif %}">
+      <div class="box-header with-border">
+        <h3 class="box-title">Search</h3>
+
+        <div class="box-tools pull-right">
+          <span data-toggle="tooltip" title="" class="badge bg-orange" data-original-title="{{ object.history.count }} Changes">{{ object.history.count }}</span>
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa {% if search_exp %} fa-minus {% else %} fa-plus {% endif %}"></i>
+          </button>
+        </div>
+        <!-- /.box-tools -->
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body" style="">
+        <form class="form-horizontal" action="" method="get">
+        {{ form|crispy }}
+        <button type="submit" value="save" class="btn btn-info pull-right">Send</button>
+        </form>
+      </div>
+      <!-- /.box-body -->
+    </div>
+    {% endif %}
+    <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">{{ boxtitle }}</h4>
+      <!-- /.box-header -->
+      <!-- form start -->
+      <table class="table table-striped mb-0">
+        <thead>
+        <tr>
+            {% for f in fields %}
+            <th> {% get_verbose_field_name view.model f %} </th>
+            {% endfor %}
+            <th> <div class="float-right table-right"> Opções </div> </th>
+        </tr>
+        </thead>
+        <tbody>
+          {% for object in object_list %}
+          <tr>
+            {% for f in fields %}
+            <td>{{ object|getattribute:f }}</td>
+            {% endfor %}
+            <td> <div class="float-right">
+            {% listoptionmaker object %}
+          </div></td>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    </div>
+
+    {% endblock %}

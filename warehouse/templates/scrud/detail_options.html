@@ -1,0 +1,5 @@
+<div class="btn-group">
+  {% for optItem in options %}
+    <a class="btn btn-{{optItem.btnClass}}" href="{{optItem.url}}">{{optItem.label}}</a>
+  {% endfor %}
+</div>

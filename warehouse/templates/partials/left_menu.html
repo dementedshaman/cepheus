@@ -1,0 +1,47 @@
+{% load staticfiles %}
+
+<aside class="sidebar">
+    <div class="scrollbar-inner">
+
+        <div class="user">
+            <div class="user__info" data-toggle="dropdown">
+                <img class="user__img" src="{% static '/img/icon-radagua.png' %}" alt="">
+                <div>
+                    <div class="user__name">{{ request.user.get_full_name }}</div>
+                    <div class="user__email">{{ request.user.email }}</div>
+                </div>
+            </div>
+
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="">View Profile</a>
+                <a class="dropdown-item" href="">Settings</a>
+                <a class="dropdown-item" href="">Logout</a>
+            </div>
+        </div>
+
+        <ul class="navigation">
+            <li class="navigation__sub @@variantsactive">
+                <a href=""><i class="zmdi zmdi-minus"></i> Fornecedores </a>
+                <ul>
+                    <li class="@@sidebaractive"><a href="{% url 'provider-create' %}">Criar</a></li>
+                    <li class="@@boxedactive"><a href="{% url 'provider-list' %}">Listar</a></li>
+                </ul>
+            </li>
+            <li class="navigation__sub @@variantsactive">
+                <a href=""><i class="zmdi zmdi-minus"></i> Produtos </a>
+                <ul>
+                    <li class="@@sidebaractive"><a href="{% url 'product-create' %}">Criar</a></li>
+                    <li class="@@boxedactive"><a href="{% url 'product-list' %}">Listar</a></li>
+                </ul>
+            </li>
+            <li class="navigation__sub @@variantsactive">
+                <a href=""><i class="zmdi zmdi-minus"></i> Entradas </a>
+                <ul>
+                    <li class="@@sidebaractive"><a href="{% url 'entry-create' %}">Criar</a></li>
+                    <li class="@@boxedactive"><a href="{% url 'entry-list' %}">Listar</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </div>
+</aside>
